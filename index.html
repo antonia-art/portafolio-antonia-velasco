@@ -1,0 +1,880 @@
+ <!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A / R — Portafolio Creativo & Arquitectónico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                   colors: {
+                        brand: {
+                            50: '#f7f7f7',
+                            100: '#e3e3e3',
+                            200: '#c8c8c8',
+                            800: '#1a1a1a',
+                            900: '#0d0d0d',
+                            accent: '#8c8c8c',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Grilla arquitectónica de fondo */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(128, 128, 128, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(128, 128, 128, 0.05) 1px, transparent 1px);
+        }
+        .dark .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Glassmorphism sutil */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass-panel {
+            background: rgba(13, 13, 13, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a1a1aa;
+            border-radius: 3px;
+        }
+        .dark ::webkit-scrollbar-thumb {
+            background: #3f3f46;
+        }
+
+        /* Fade inline animation classes */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-[#fcfcfc] dark:bg-brand-900 text-brand-900 dark:text-brand-50 font-sans antialiased selection:bg-brand-900 selection:text-white dark:selection:bg-white dark:selection:text-brand-900 transition-colors duration-500 bg-grid-pattern min-h-screen flex flex-col">
+
+    <header class="fixed top-0 left-0 w-full z-40 transition-all duration-300 py-5 px-6 md:px-12 glass-panel border-b border-black/5 dark:border-white/5">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Monograma Logo -->
+            <a href="#" class="group flex items-center space-x-2 text-xl font-serif tracking-widest uppercase">
+                <span class="font-bold border border-brand-900 dark:border-white px-2 py-0.5 group-hover:bg-brand-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-brand-900 transition-colors duration-300">A</span>
+                <span class="text-xs font-sans tracking-widest text-zinc-400 dark:text-zinc-500">/</span>
+                <span class="font-light">R</span>
+            </a>
+
+            <!-- Nav Links Desktop -->
+            <nav class="hidden md:flex items-center space-x-10 text-xs font-medium tracking-widest uppercase text-zinc-600 dark:text-zinc-400">
+                <a href="#trabajos" class="hover:text-brand-900 dark:hover:text-white transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-900 dark:after:bg-white hover:after:w-full after:transition-all">Trabajos</a>
+                <a href="#estudio" class="hover:text-brand-900 dark:hover:text-white transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-900 dark:after:bg-white hover:after:w-full after:transition-all">Lienzo Interactivo</a>
+                <a href="#sobre-mi" class="hover:text-brand-900 dark:hover:text-white transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-900 dark:after:bg-white hover:after:w-full after:transition-all">Sobre Mí & Filosofía</a>
+                <a href="#contacto" class="hover:text-brand-900 dark:hover:text-white transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-900 dark:after:bg-white hover:after:w-full after:transition-all">Contacto</a>
+            </nav>
+
+            <!-- Acciones / Theme Toggle -->
+            <div class="flex items-center space-x-4">
+                <button id="themeToggleBtn" aria-label="Cambiar tema" class="p-2 rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-zinc-300"></i>
+                    <i data-lucide="moon" class="w-4 h-4 block dark:hidden text-zinc-700"></i>
+                </button>
+
+                <!-- Menu Móvil Trigger -->
+                <button id="mobileMenuBtn" aria-label="Abrir menú" class="md:hidden p-2 text-zinc-800 dark:text-zinc-200">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Modal -->
+        <div id="mobileMenu" class="hidden md:hidden fixed inset-0 top-[73px] bg-white/95 dark:bg-brand-900/95 backdrop-blur-md flex-col px-8 py-12 space-y-6 text-sm tracking-widest uppercase border-t border-zinc-200 dark:border-zinc-800">
+            <a href="#trabajos" class="mobile-link py-2 border-b border-zinc-100 dark:border-zinc-800">Trabajos</a>
+            <a href="#estudio" class="mobile-link py-2 border-b border-zinc-100 dark:border-zinc-800">Lienzo Interactivo</a>
+            <a href="#sobre-mi" class="mobile-link py-2 border-b border-zinc-100 dark:border-zinc-800">Sobre Mí & Filosofía</a>
+            <a href="#contacto" class="mobile-link py-2 border-b border-zinc-100 dark:border-zinc-800">Contacto</a>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-24">
+
+        <section class="relative min-h-[85vh] flex items-center justify-center px-6 md:px-12 py-16 overflow-hidden border-b border-zinc-200/60 dark:border-zinc-800/60">
+            <!-- Canvas Interactivo Abstracto -->
+            <canvas id="heroCanvas" class="absolute inset-0 w-full h-full opacity-40 dark:opacity-30 pointer-events-auto cursor-crosshair"></canvas>
+
+            <div class="relative z-10 max-w-5xl mx-auto text-center pointer-events-none">
+                <div class="inline-flex items-center space-x-2 border border-zinc-300 dark:border-zinc-700 rounded-full px-4 py-1.5 mb-8 bg-white/50 dark:bg-black/30 backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="text-xs tracking-widest uppercase text-zinc-600 dark:text-zinc-400 font-medium">Disponible para proyectos estratégicos</span>
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif tracking-tight leading-[1.08] mb-8 font-light">
+                    Diseño, Estrategia <br>
+                    <span class="italic font-normal text-zinc-500 dark:text-zinc-400">&</span> Forma Estructural
+                </h1>
+
+                <p class="max-w-2xl mx-auto text-base sm:text-lg text-zinc-600 dark:text-zinc-400 font-light leading-relaxed mb-10">
+                    Investigación espacial, análisis conceptual e innovación de valor aplicada a la arquitectura modular, el diseño tipográfico y la narrativa estratégica.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pointer-events-auto">
+                    <a href="#trabajos" class="w-full sm:w-auto px-8 py-4 bg-brand-900 text-white dark:bg-white dark:text-brand-900 text-xs font-semibold uppercase tracking-widest rounded-none hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all shadow-sm">
+                        Explorar Portafolio
+                    </a>
+                    <a href="#estudio" class="w-full sm:w-auto px-8 py-4 border border-zinc-300 dark:border-zinc-700 hover:border-zinc-900 dark:hover:border-white text-xs font-semibold uppercase tracking-widest transition-all glass-panel">
+                        Experimento Interactivo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Scroll indicator -->
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 opacity-60">
+                <span class="text-[10px] uppercase tracking-widest text-zinc-400">Scroll</span>
+                <div class="w-[1px] h-8 bg-zinc-400 dark:bg-zinc-600 animate-pulse"></div>
+            </div>
+        </section>
+
+
+        <section id="trabajos" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 fade-in-up">
+                <div>
+                    <span class="text-xs font-serif italic text-zinc-400 tracking-widest uppercase">01 / Portafolio Seleccionado</span>
+                    <h2 class="text-3xl md:text-5xl font-serif font-light mt-2">Proyectos & Ensayos</h2>
+                </div>
+
+                <!-- Filtros de Proyectos -->
+                <div class="flex flex-wrap gap-2 mt-6 md:mt-0 border-b border-zinc-200 dark:border-zinc-800 pb-2">
+                    <button class="filter-btn active text-xs tracking-widest uppercase px-3 py-1.5 transition-colors text-brand-900 dark:text-white border-b-2 border-brand-900 dark:border-white font-medium" data-filter="todos">Todos</button>
+                    <button class="filter-btn text-xs tracking-widest uppercase px-3 py-1.5 transition-colors text-zinc-500 hover:text-brand-900 dark:hover:text-white border-b-2 border-transparent" data-filter="arquitectura">Arquitectura & Estructura</button>
+                    <button class="filter-btn text-xs tracking-widest uppercase px-3 py-1.5 transition-colors text-zinc-500 hover:text-brand-900 dark:hover:text-white border-b-2 border-transparent" data-filter="estrategia">Estrategia & Negocio</button>
+                    <button class="filter-btn text-xs tracking-widest uppercase px-3 py-1.5 transition-colors text-zinc-500 hover:text-brand-900 dark:hover:text-white border-b-2 border-transparent" data-filter="editorial">Diseño Visual & Narrativa</button>
+                </div>
+            </div>
+
+            <!-- Grilla de Tarjetas -->
+            <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <!-- Se inyecta dinámicamente mediante JS -->
+            </div>
+        </section>
+
+
+        <section id="estudio" class="py-24 px-6 md:px-12 bg-zinc-100/70 dark:bg-zinc-900/40 border-y border-zinc-200/80 dark:border-zinc-800/80">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-12 fade-in-up">
+                    <span class="text-xs font-serif italic text-zinc-400 tracking-widest uppercase">02 / Laboratorio Modular</span>
+                    <h2 class="text-3xl md:text-4xl font-serif font-light mt-2">Concept Studio & Sandbox</h2>
+                    <p class="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 mt-3 font-light leading-relaxed">
+                        Explora la composición espacial y formal. Genera patrones estocásticos, modifica la tensión de red o limpia el mapa de fuerzas estructurales.
+                    </p>
+                </div>
+
+                <!-- Modulo Sandbox Interactivo -->
+                <div class="bg-white dark:bg-brand-900 border border-zinc-200 dark:border-zinc-800 rounded-none shadow-sm overflow-hidden grid grid-cols-1 lg:grid-cols-4">
+                    <!-- Controles -->
+                    <div class="p-6 border-b lg:border-b-0 lg:border-r border-zinc-200 dark:border-zinc-800 flex flex-col justify-between space-y-6">
+                        <div class="space-y-4">
+                            <h3 class="text-xs font-semibold uppercase tracking-widest text-zinc-400">Parámetros</h3>
+                            
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider mb-2 text-zinc-600 dark:text-zinc-300">Densidad de Malla</label>
+                                <input type="range" id="sandboxDensity" min="5" max="30" value="15" class="w-full accent-zinc-800 dark:accent-zinc-200">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider mb-2 text-zinc-600 dark:text-zinc-300">Geometría</label>
+                                <select id="sandboxShape" class="w-full bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-xs px-3 py-2 focus:outline-none">
+                                    <option value="lines">Líneas Estructurales</option>
+                                    <option value="cubes">Módulos Isométricos</option>
+                                    <option value="circles">Campos Radiales</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider mb-2 text-zinc-600 dark:text-zinc-300">Velocidad de Variación</label>
+                                <input type="range" id="sandboxSpeed" min="0" max="100" value="30" class="w-full accent-zinc-800 dark:accent-zinc-200">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+                            <button id="resetSandboxBtn" class="w-full py-2.5 border border-zinc-300 dark:border-zinc-700 text-xs uppercase tracking-widest hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+                                Regenerar Composición
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Canvas del Sandbox -->
+                    <div class="lg:col-span-3 min-h-[400px] relative bg-zinc-950 flex items-center justify-center overflow-hidden">
+                        <canvas id="sandboxCanvas" class="w-full h-full cursor-pointer"></canvas>
+                        <div class="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1.5 border border-white/10 text-[10px] tracking-widest uppercase text-zinc-400 pointer-events-none">
+                            Interacción táctil / Clic para perturbar
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="sobre-mi" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                <div class="lg:col-span-5 fade-in-up">
+                    <span class="text-xs font-serif italic text-zinc-400 tracking-widest uppercase">03 / Sobre Mí & Filosofía</span>
+                    <h2 class="text-3xl md:text-5xl font-serif font-light mt-2 leading-tight">
+                        La intersección entre estructura rígida e intuición abstracta.
+                    </h2>
+                    
+                    <div class="mt-8 space-y-4 text-sm text-zinc-600 dark:text-zinc-400 font-light leading-relaxed">
+                        <p>
+                            Mi enfoque metodológico abarca la rigurosidad sintáctica del diseño arquitectónico y el pensamiento analítico aplicado a la estrategia y comunicación visual.
+                        </p>
+                        <p>
+                            Inspirado en sistemas modulares, la arquitectura efímera de Shigeru Ban y las dinámicas de la economía aplicada, desarrollo piezas tipográficas, análisis espaciales y marcos analíticos centrados en la simplicidad formal.
+                        </p>
+                    </div>
+
+                    <!-- Competencias / Tags -->
+                    <div class="mt-8 pt-8 border-t border-zinc-200 dark:border-zinc-800">
+                        <h4 class="text-xs font-semibold uppercase tracking-widest mb-4 text-zinc-400">Áreas de Dominio</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs border border-zinc-200 dark:border-zinc-800 px-3 py-1 bg-white dark:bg-zinc-900">Diseño Estructural</span>
+                            <span class="text-xs border border-zinc-200 dark:border-zinc-800 px-3 py-1 bg-white dark:bg-zinc-900">Análisis Estratégico</span>
+                            <span class="text-xs border border-zinc-200 dark:border-zinc-800 px-3 py-1 bg-white dark:bg-zinc-900">Diagramación Modular</span>
+                            <span class="text-xs border border-zinc-200 dark:border-zinc-800 px-3 py-1 bg-white dark:bg-zinc-900">Microeconomía Aplicada</span>
+                            <span class="text-xs border border-zinc-200 dark:border-zinc-800 px-3 py-1 bg-white dark:bg-zinc-900">Curaduría Editorial</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columnas de Principios / Filosofía -->
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 fade-in-up">
+                    <div class="p-8 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-brand-900/50 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors">
+                        <span class="text-2xl font-serif text-zinc-400 dark:text-zinc-600 font-light mb-4 block">01</span>
+                        <h3 class="text-base font-medium mb-2">Economía de Medios</h3>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 font-light leading-relaxed">
+                            Lograr el máximo impacto expresivo y funcional utilizando el mínimo número de elementos redundantes.
+                        </p>
+                    </div>
+
+                    <div class="p-8 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-brand-900/50 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors">
+                        <span class="text-2xl font-serif text-zinc-400 dark:text-zinc-600 font-light mb-4 block">02</span>
+                        <h3 class="text-base font-medium mb-2">Simetría & Tensión</h3>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 font-light leading-relaxed">
+                            El equilibrio no equivale a la estaticidad; la tensión entre formas vacías e impresas crea dinamismo intencional.
+                        </p>
+                    </div>
+
+                    <div class="p-8 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-brand-900/50 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors">
+                        <span class="text-2xl font-serif text-zinc-400 dark:text-zinc-600 font-light mb-4 block">03</span>
+                        <h3 class="text-base font-medium mb-2">Análisis Sistémico</h3>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 font-light leading-relaxed">
+                            Cualquiera que sea el soporte —un póster, un modelo de negocio o un pabellón— responde a reglas sintácticas claras.
+                        </p>
+                    </div>
+
+                    <div class="p-8 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-brand-900/50 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors">
+                        <span class="text-2xl font-serif text-zinc-400 dark:text-zinc-600 font-light mb-4 block">04</span>
+                        <h3 class="text-base font-medium mb-2">Materialidad Honesta</h3>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 font-light leading-relaxed">
+                            Respetar la naturaleza propia de los soportes, ya sea papel, tubo de cartón, tipografía o datos numéricos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="contacto" class="py-24 px-6 md:px-12 bg-zinc-100/60 dark:bg-zinc-900/60 border-t border-zinc-200/80 dark:border-zinc-800/80">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12 fade-in-up">
+                    <span class="text-xs font-serif italic text-zinc-400 tracking-widest uppercase">04 / Inicio de Conversación</span>
+                    <h2 class="text-3xl md:text-5xl font-serif font-light mt-2">Contacto & Colaboración</h2>
+                    <p class="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 mt-2 font-light">
+                        ¿Tienes una propuesta conceptual, proyecto arquitectónico o consultoría estratégica?
+                    </p>
+                </div>
+
+                <form id="contactForm" class="space-y-6 fade-in-up">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-xs uppercase tracking-widest mb-2 text-zinc-500">Nombre / Firma</label>
+                            <input type="text" id="name" required class="w-full bg-white dark:bg-brand-900 border border-zinc-300 dark:border-zinc-700 px-4 py-3 text-sm focus:outline-none focus:border-brand-900 dark:focus:border-white transition-colors">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-xs uppercase tracking-widest mb-2 text-zinc-500">Correo Electrónico</label>
+                            <input type="email" id="email" required class="w-full bg-white dark:bg-brand-900 border border-zinc-300 dark:border-zinc-700 px-4 py-3 text-sm focus:outline-none focus:border-brand-900 dark:focus:border-white transition-colors">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-xs uppercase tracking-widest mb-2 text-zinc-500">Mensaje / Breve Resumen</label>
+                        <textarea id="message" rows="5" required class="w-full bg-white dark:bg-brand-900 border border-zinc-300 dark:border-zinc-700 px-4 py-3 text-sm focus:outline-none focus:border-brand-900 dark:focus:border-white transition-colors resize-none"></textarea>
+                    </div>
+
+                    <div class="text-center pt-4">
+                        <button type="submit" class="w-full md:w-auto px-12 py-4 bg-brand-900 text-white dark:bg-white dark:text-brand-900 text-xs font-semibold uppercase tracking-widest hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">
+                            Enviar Mensaje
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-zinc-200 dark:border-zinc-800 py-12 px-6 md:px-12 bg-white dark:bg-brand-900">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center space-x-2">
+                <span class="font-serif text-lg font-bold">A / R</span>
+                <span class="text-xs text-zinc-400 dark:text-zinc-500">© 2026. Todos los derechos reservados.</span>
+            </div>
+
+            <div class="flex space-x-6 text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+                <a href="#" class="hover:text-brand-900 dark:hover:text-white transition-colors">LinkedIn</a>
+                <a href="#" class="hover:text-brand-900 dark:hover:text-white transition-colors">Behance</a>
+                <a href="#" class="hover:text-brand-900 dark:hover:text-white transition-colors">Instagram</a>
+                <a href="#" class="hover:text-brand-900 dark:hover:text-white transition-colors">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <div id="projectModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 md:p-8 bg-black/80 backdrop-blur-md">
+        <div class="bg-white dark:bg-brand-900 border border-zinc-200 dark:border-zinc-800 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative p-6 md:p-10 shadow-2xl">
+            <!-- Botón cerrar -->
+            <button id="closeModalBtn" class="absolute top-6 right-6 p-2 text-zinc-500 hover:text-black dark:hover:text-white transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <!-- Contenido Dinámico del Modal -->
+            <div id="modalContent">
+                <!-- Se llena mediante JS -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 right-8 z-50 bg-brand-900 text-white dark:bg-white dark:text-brand-900 px-6 py-4 shadow-xl border border-zinc-700 text-xs uppercase tracking-widest transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        Mensaje enviado con éxito.
+    </div>
+
+
+    <script>
+        // Inicializar Iconos
+        lucide.createIcons();
+
+        // -------------------------------------------------------------
+        // Data Mock de Proyectos
+        // -------------------------------------------------------------
+        const projectsData = [
+            {
+                id: 'shigeru-ban',
+                title: 'Estudio Estructural: Shigeru Ban',
+                category: 'arquitectura',
+                categoryLabel: 'Arquitectura & Estructura',
+                subtitle: 'Análisis de Materiales Efímeros y Lámina Modular 3x3',
+                summary: 'Descomposición analítica de la poética de los tubos de papel estructurales y modulación espacial eficiente.',
+                imageSvg: `<svg viewBox="0 0 400 300" class="w-full h-full bg-zinc-900 text-white" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="400" height="300" fill="#121212"/>
+                    <circle cx="200" cy="150" r="80" stroke="#ffffff" stroke-width="0.5" fill="none" opacity="0.4"/>
+                    <circle cx="200" cy="150" r="50" stroke="#ffffff" stroke-width="0.5" fill="none" stroke-dasharray="2 4"/>
+                    <line x1="100" y1="150" x2="300" y2="150" stroke="#888" stroke-width="0.5"/>
+                    <line x1="200" y1="50" x2="200" y2="250" stroke="#888" stroke-width="0.5"/>
+                    <rect x="160" y="110" width="80" height="80" stroke="#ffffff" stroke-width="1" fill="none"/>
+                    <text x="200" y="270" font-family="sans-serif" font-size="9" fill="#888" text-anchor="middle" letter-spacing="3">MÓDULO PAPEL / ESTUDIO 01</text>
+                </svg>`,
+                description: `Este proyecto profundiza en la filosofía constructiva del Pritzker Shigeru Ban. A través de la experimentación con tubos de papel reciclado y elementos modulares de 3x3 metros, se investiga cómo la arquitectura de emergencia puede alcanzar estándares de permanencia sin perder su vocación sustentable.`,
+                tags: ['Shigeru Ban', 'Sustentabilidad', 'Módulo 3x3', 'Estructuras Efímeras'],
+                methodology: 'Investigación de Resistencia Mecánica, Maquetado Digital y Renderizado Conceptual.',
+                deliverables: 'Lámina técnica 3x3, modelo volumétrico sintético y ensayo crítico de materialidad.'
+            },
+            {
+                id: 'oceano-azul',
+                title: 'Estrategia del Océano Azul',
+                category: 'estrategia',
+                categoryLabel: 'Estrategia & Negocio',
+                subtitle: 'Innovación de Valor y Curvas de Atributos Competitivos',
+                summary: 'Reconfiguración de fronteras de mercado mediante la eliminación y reducción de variables redundantes.',
+                imageSvg: `<svg viewBox="0 0 400 300" class="w-full h-full bg-zinc-950 text-white" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="400" height="300" fill="#0a0a0a"/>
+                    <path d="M 50 220 Q 120 80 200 180 T 350 100" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+                    <path d="M 50 200 Q 120 180 200 120 T 350 220" fill="none" stroke="#555" stroke-width="1" stroke-dasharray="4 4"/>
+                    <circle cx="200" cy="180" r="4" fill="#ffffff"/>
+                    <circle cx="350" cy="100" r="4" fill="#ffffff"/>
+                    <line x1="50" y1="240" x2="350" y2="240" stroke="#333" stroke-width="1"/>
+                    <text x="50" y="260" font-family="sans-serif" font-size="8" fill="#666">ATRIBUTOS DE VALOR</text>
+                    <text x="350" y="260" font-family="sans-serif" font-size="8" fill="#666" text-anchor="end">DIVERGENCIA</text>
+                </svg>`,
+                description: `Modelado analítico basado en el marco de Kim & Mauborgne. El estudio plantea la eliminación de factores saturados en industrias tradicionales para crear curvas de valor divergentes con un enfoque en la simplicidad radical.`,
+                tags: ['Innovación de Valor', 'Matriz ERIC', 'Curva de Valor', 'Estrategia'],
+                methodology: 'Benchmarking cuantitativo, formulación de matriz Eliminar-Reducir-Incrementar-Crear.',
+                deliverables: 'Reporte ejecutivo, matriz gráfica de divergencia estratégica y canvas conceptual.'
+            },
+            {
+                id: 'geometria-tipografia',
+                title: 'Geometría & Tipografía Abstracta',
+                category: 'editorial',
+                categoryLabel: 'Diseño Visual & Narrativa',
+                subtitle: 'Composición Visual, Espacio Blanco y Tensión Visual',
+                summary: 'Serie de carteles visuales donde la masa tipográfica actúa como componente plástico y arquitectónico.',
+                imageSvg: `<svg viewBox="0 0 400 300" class="w-full h-full bg-zinc-900 text-white" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="400" height="300" fill="#151515"/>
+                    <text x="60" y="190" font-family="serif" font-size="140" font-weight="300" fill="#ffffff" opacity="0.9">Aa</text>
+                    <line x1="40" y1="40" x2="360" y2="260" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+                    <rect x="240" y="60" width="100" height="180" stroke="#888" stroke-width="0.5" fill="none"/>
+                    <text x="250" y="80" font-family="sans-serif" font-size="7" fill="#aaa" letter-spacing="2">GRID SYSTEM</text>
+                </svg>`,
+                description: `Investigación tipográfica suiza reinterpretada a través de un prisma vanguardista. El uso riguroso de retículas y la exploración de contraste tipográfico construyen jerarquías dinámicas en formatos impresos y digitales.`,
+                tags: ['Tipografía', 'Grid Suizo', 'Editorial', 'Composición Visual'],
+                methodology: 'Estudio de proporciones armónicas, retícula de 12 columnas y ensayos de contraste.',
+                deliverables: 'Colección de 6 pósters de arte modular y manual de aplicación tipográfica.'
+            },
+            {
+                id: 'narrativas-clasicas',
+                title: 'Análisis de Narrativas Clásicas',
+                category: 'editorial',
+                categoryLabel: 'Diseño Visual & Narrativa',
+                subtitle: 'Simetría, Ritmo y Estructura en la Literatura Urbana',
+                summary: 'Traducción diagramática de la estructura dramática y los ejes de tensión en relatos de la ciudad.',
+                imageSvg: `<svg viewBox="0 0 400 300" class="w-full h-full bg-zinc-950 text-white" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="400" height="300" fill="#0d0d0d"/>
+                    <polygon points="200,60 320,240 80,240" stroke="#ffffff" stroke-width="0.75" fill="none"/>
+                    <line x1="200" y1="60" x2="200" y2="240" stroke="#666" stroke-width="0.5" stroke-dasharray="3 3"/>
+                    <circle cx="200" cy="150" r="3" fill="#ffffff"/>
+                    <text x="200" y="45" font-family="serif" font-size="10" fill="#aaa" text-anchor="middle" italic="true">Climax / Cúspide Structural</text>
+                </svg>`,
+                description: `Un ejercicio de abstracción que mapea visualmente el arco narrativo, los conflictos urbanos y la psicología de personajes en textos literarios clásicos, transformando texto continuo en diagramas de flujo semiótico.`,
+                tags: ['Semiótica', 'Mapeo Narrativo', 'Diseño de Información', 'Diagramación'],
+                methodology: 'Descomposición sintáctica de textos, codificación tipológica y abstracción vectorial.',
+                deliverables: 'Diagramas de tensión dramática e infografías abstractas plegables.'
+            }
+        ];
+
+        // -------------------------------------------------------------
+        // Renderizado de Proyectos
+        // -------------------------------------------------------------
+        const projectsGrid = document.getElementById('projectsGrid');
+
+        function renderProjects(filter = 'todos') {
+            projectsGrid.innerHTML = '';
+
+            const filtered = filter === 'todos' 
+                ? projectsData 
+                : projectsData.filter(p => p.category === filter);
+
+            filtered.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'project-card group border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-brand-900/40 overflow-hidden cursor-pointer hover:border-brand-900 dark:hover:border-white transition-all duration-500 flex flex-col justify-between fade-in-up';
+                card.onclick = () => openProjectModal(project.id);
+
+                card.innerHTML = `
+                    <div class="aspect-[4/3] overflow-hidden relative border-b border-zinc-200 dark:border-zinc-800">
+                        <div class="w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out">
+                            ${project.imageSvg}
+                        </div>
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <span class="text-xs uppercase tracking-widest bg-white text-black dark:bg-black dark:text-white px-4 py-2 border border-black/10">Ver Caso de Estudio</span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] uppercase tracking-widest text-zinc-400 font-semibold mb-1 block">${project.categoryLabel}</span>
+                            <h3 class="text-xl font-serif font-normal group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors">${project.title}</h3>
+                            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-2 font-light line-clamp-2">${project.summary}</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex justify-between items-center text-xs text-zinc-400">
+                            <span>Saber más</span>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+                        </div>
+                    </div>
+                `;
+                projectsGrid.appendChild(card);
+            });
+
+            lucide.createIcons();
+            observeScrollAnimations();
+        }
+
+        // Filtros Click Listener
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active', 'text-brand-900', 'dark:text-white', 'border-brand-900', 'dark:border-white');
+                    b.classList.add('text-zinc-500', 'border-transparent');
+                });
+                e.target.classList.add('active', 'text-brand-900', 'dark:text-white', 'border-brand-900', 'dark:border-white');
+                e.target.classList.remove('text-zinc-500', 'border-transparent');
+
+                renderProjects(e.target.dataset.filter);
+            });
+        });
+
+        // Modal Functionality
+        const modal = document.getElementById('projectModal');
+        const modalContent = document.getElementById('modalContent');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        function openProjectModal(id) {
+            const project = projectsData.find(p => p.id === id);
+            if (!project) return;
+
+            modalContent.innerHTML = `
+                <div class="space-y-6">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-zinc-400">${project.categoryLabel}</span>
+                        <h2 class="text-3xl sm:text-4xl font-serif font-light mt-1">${project.title}</h2>
+                        <p class="text-sm italic text-zinc-500 dark:text-zinc-400 mt-1">${project.subtitle}</p>
+                    </div>
+
+                    <div class="aspect-video w-full overflow-hidden border border-zinc-200 dark:border-zinc-800">
+                        ${project.imageSvg}
+                    </div>
+
+                    <div class="space-y-4 text-sm text-zinc-600 dark:text-zinc-300 font-light leading-relaxed">
+                        <h3 class="text-xs font-semibold uppercase tracking-widest text-zinc-400 border-b border-zinc-200 dark:border-zinc-800 pb-1">Resumen del Proyecto</h3>
+                        <p>${project.description}</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+                        <div>
+                            <h4 class="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-2">Metodología Aplicada</h4>
+                            <p class="text-xs text-zinc-600 dark:text-zinc-400 font-light">${project.methodology}</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-2">Entregables</h4>
+                            <p class="text-xs text-zinc-600 dark:text-zinc-400 font-light">${project.deliverables}</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <h4 class="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-2">Etiquetas Conceptual de Trabajo</h4>
+                        <div class="flex flex-wrap gap-2">
+                            ${project.tags.map(t => `<span class="text-[11px] border border-zinc-200 dark:border-zinc-800 px-3 py-1 bg-zinc-50 dark:bg-zinc-800">${t}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        closeModalBtn.onclick = () => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        };
+
+        window.onclick = (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        };
+
+
+        // -------------------------------------------------------------
+        // -------------------------------------------------------------
+        const heroCanvas = document.getElementById('heroCanvas');
+        const heroCtx = heroCanvas.getContext('2d');
+        let heroNodes = [];
+        let mousePos = { x: null, y: null };
+
+        function resizeHeroCanvas() {
+            heroCanvas.width = heroCanvas.parentElement.offsetWidth;
+            heroCanvas.height = heroCanvas.parentElement.offsetHeight;
+            initHeroNodes();
+        }
+
+        function initHeroNodes() {
+            heroNodes = [];
+            const count = Math.floor((heroCanvas.width * heroCanvas.height) / 18000);
+            for (let i = 0; i < count; i++) {
+                heroNodes.push({
+                    x: Math.random() * heroCanvas.width,
+                    y: Math.random() * heroCanvas.height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    radius: Math.random() * 1.5 + 1
+                });
+            }
+        }
+
+        function animateHeroCanvas() {
+            heroCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+            const isDark = document.documentElement.classList.contains('dark');
+            const lineColor = isDark ? '255, 255, 255' : '0, 0, 0';
+
+            for (let i = 0; i < heroNodes.length; i++) {
+                let node = heroNodes[i];
+                node.x += node.vx;
+                node.y += node.vy;
+
+                if (node.x < 0 || node.x > heroCanvas.width) node.vx *= -1;
+                if (node.y < 0 || node.y > heroCanvas.height) node.vy *= -1;
+
+                heroCtx.beginPath();
+                heroCtx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                heroCtx.fillStyle = `rgba(${lineColor}, 0.4)`;
+                heroCtx.fill();
+
+                // Conectar nodos cercanos
+                for (let j = i + 1; j < heroNodes.length; j++) {
+                    let nodeB = heroNodes[j];
+                    let dx = node.x - nodeB.x;
+                    let dy = node.y - nodeB.y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 120) {
+                        heroCtx.beginPath();
+                        heroCtx.moveTo(node.x, node.y);
+                        heroCtx.lineTo(nodeB.x, nodeB.y);
+                        heroCtx.strokeStyle = `rgba(${lineColor}, ${0.15 * (1 - dist / 120)})`;
+                        heroCtx.lineWidth = 0.5;
+                        heroCtx.stroke();
+                    }
+                }
+
+                // Interacción con Mouse
+                if (mousePos.x !== null) {
+                    let mdx = node.x - mousePos.x;
+                    let mdy = node.y - mousePos.y;
+                    let mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+                    if (mdist < 140) {
+                        heroCtx.beginPath();
+                        heroCtx.moveTo(node.x, node.y);
+                        heroCtx.lineTo(mousePos.x, mousePos.y);
+                        heroCtx.strokeStyle = `rgba(${lineColor}, ${0.3 * (1 - mdist / 140)})`;
+                        heroCtx.lineWidth = 0.8;
+                        heroCtx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animateHeroCanvas);
+        }
+
+        window.addEventListener('resize', resizeHeroCanvas);
+        window.addEventListener('mousemove', (e) => {
+            const rect = heroCanvas.getBoundingClientRect();
+            mousePos.x = e.clientX - rect.left;
+            mousePos.y = e.clientY - rect.top;
+        });
+
+
+        // -------------------------------------------------------------
+        // -------------------------------------------------------------
+        const sandboxCanvas = document.getElementById('sandboxCanvas');
+        const sandboxCtx = sandboxCanvas.getContext('2d');
+        const densityInput = document.getElementById('sandboxDensity');
+        const shapeSelect = document.getElementById('sandboxShape');
+        const speedInput = document.getElementById('sandboxSpeed');
+        const resetBtn = document.getElementById('resetSandboxBtn');
+
+        let sandboxTime = 0;
+        let perturbation = { x: 0, y: 0, active: false };
+
+        function resizeSandbox() {
+            sandboxCanvas.width = sandboxCanvas.parentElement.offsetWidth;
+            sandboxCanvas.height = sandboxCanvas.parentElement.offsetHeight;
+        }
+
+        function renderSandbox() {
+            sandboxCtx.clearRect(0, 0, sandboxCanvas.width, sandboxCanvas.height);
+            
+            const density = parseInt(densityInput.value);
+            const shape = shapeSelect.value;
+            const speed = parseFloat(speedInput.value) / 1000;
+            
+            sandboxTime += speed;
+
+            const cols = density;
+            const rows = Math.floor(density * (sandboxCanvas.height / sandboxCanvas.width));
+            const cellW = sandboxCanvas.width / cols;
+            const cellH = sandboxCanvas.height / (rows || 1);
+
+            sandboxCtx.strokeStyle = '#ffffff';
+            sandboxCtx.fillStyle = '#ffffff';
+
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    const x = i * cellW + cellW / 2;
+                    const y = j * cellH + cellH / 2;
+
+                    // Distancia a punto de perturbación
+                    let offset = Math.sin(sandboxTime + i * 0.2 + j * 0.2) * 10;
+                    if (perturbation.active) {
+                        const dx = x - perturbation.x;
+                        const dy = y - perturbation.y;
+                        const d = Math.sqrt(dx * dx + dy * dy);
+                        if (d < 200) {
+                            offset += (200 - d) * 0.2;
+                        }
+                    }
+
+                    sandboxCtx.save();
+                    sandboxCtx.translate(x, y);
+
+                    if (shape === 'lines') {
+                        sandboxCtx.rotate(sandboxTime + (i + j) * 0.1);
+                        sandboxCtx.beginPath();
+                        sandboxCtx.moveTo(-cellW / 3, 0);
+                        sandboxCtx.lineTo(cellW / 3 + offset, 0);
+                        sandboxCtx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+                        sandboxCtx.lineWidth = 0.8;
+                        sandboxCtx.stroke();
+                    } else if (shape === 'cubes') {
+                        const size = Math.max(2, (cellW / 3) + offset * 0.2);
+                        sandboxCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                        sandboxCtx.strokeRect(-size / 2, -size / 2, size, size);
+                    } else if (shape === 'circles') {
+                        const r = Math.abs(Math.sin(sandboxTime + i * 0.1) * (cellW / 2) + offset * 0.1);
+                        sandboxCtx.beginPath();
+                        sandboxCtx.arc(0, 0, Math.max(1, r), 0, Math.PI * 2);
+                        sandboxCtx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                        sandboxCtx.fill();
+                    }
+
+                    sandboxCtx.restore();
+                }
+            }
+
+            requestAnimationFrame(renderSandbox);
+        }
+
+        sandboxCanvas.addEventListener('mousemove', (e) => {
+            const rect = sandboxCanvas.getBoundingClientRect();
+            perturbation.x = e.clientX - rect.left;
+            perturbation.y = e.clientY - rect.top;
+            perturbation.active = true;
+        });
+
+        sandboxCanvas.addEventListener('mouseleave', () => {
+            perturbation.active = false;
+        });
+
+        resetBtn.addEventListener('click', () => {
+            sandboxTime = Math.random() * 100;
+        });
+
+
+        // -------------------------------------------------------------
+        // -------------------------------------------------------------
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        
+        // Configuración inicial de tema por preferencia del sistema
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+
+        // Menú Móvil Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+            });
+        });
+
+
+        // Formulario de Contacto
+        const contactForm = document.getElementById('contactForm');
+        const toast = document.getElementById('toast');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Mostrar notificación Toast
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            contactForm.reset();
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 4000);
+        });
+
+
+        // -------------------------------------------------------------
+        // Intersection Observer para Animación Fade-In
+        // -------------------------------------------------------------
+        function observeScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+        }
+
+
+        // -------------------------------------------------------------
+        // Inicialización General al Cargar Ventana
+        // -------------------------------------------------------------
+        window.onload = function() {
+            renderProjects();
+            resizeHeroCanvas();
+            animateHeroCanvas();
+            
+            resizeSandbox();
+            renderSandbox();
+
+            observeScrollAnimations();
+        };
+
+        window.onresize = function() {
+            resizeHeroCanvas();
+            resizeSandbox();
+        };
+    </script>
+</body>
+</html>
